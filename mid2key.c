@@ -16,6 +16,7 @@ int main(int argc, char** argv)
     FILE* config;
     const char* file;
     KeyCode map[128];
+    KeySym sym;
     char buffer[128];
     char* keysym;
     int temp;
@@ -64,8 +65,8 @@ int main(int argc, char** argv)
                     if ((temp >= 0) && (temp <= 127)) {
                         ++keysym;
                         if (strchr(keysym,'\n')) *strchr(keysym,'\n') = '\0';
-                        if ((map[temp] = XStringToKeysym(keysym))) {
-                            if (!(map[temp] = XKeysymToKeycode(xdp,map[temp])))
+                        if ((sym = XStringToKeysym(keysym))) {
+                            if (!(map[temp] = XKeysymToKeycode(xdp,sym)))
                                 fprintf(stderr,"No keycode for keysym '%s'\n",keysym);
                         } else if (*keysym) {
                             fprintf(stderr,"Undefined keysym '%s'\n",keysym);
